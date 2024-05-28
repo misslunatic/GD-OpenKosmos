@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://cxtniw5rd62tq"]
+
+[ext_resource type="Script" path="res://src/FloatingOrigin.gd" id="1_f7f8v"]
+[ext_resource type="PackedScene" uid="uid://c2c36qh0hltf5" path="res://scenes/ship.tscn" id="1_kineq"]
+[ext_resource type="Script" path="res://addons/debug_camera/scripts/DebugCamera3D.gd" id="2_xhylo"]
+[ext_resource type="Script" path="res://scenes/ship.gd" id="3_2uasf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_porgd"]
+albedo_color = Color(0.307299, 0.52583, 0, 1)
+metallic_specular = 0.0
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_gfm3c"]
+material = SubResource("StandardMaterial3D_porgd")
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xiw5c"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="Environment" id="Environment_4cdxr"]
+tonemap_mode = 3
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_f7f8v")
+
+[node name="Ship" parent="." node_paths=PackedStringArray("label") instance=ExtResource("1_kineq")]
+script = ExtResource("3_2uasf")
+label = NodePath("../Label")
+
+[node name="DebugCamera3D" type="Camera3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.28366)
+script = ExtResource("2_xhylo")
+
+[node name="World" type="Node3D" parent="."]
+editor_description = "This will hold the rest of the world; A floating world origin is in use. Think Futurama."
+
+[node name="StaticBody3D" type="StaticBody3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.07767, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/StaticBody3D"]
+mesh = SubResource("BoxMesh_gfm3c")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.11783, 0, -0.363281)
+shape = SubResource("BoxShape3D_xiw5c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
+transform = Transform3D(0.591084, 0.80661, -5.22431e-07, -0.509386, 0.373279, 0.775364, 0.625416, -0.458305, 0.631515, 0, 0, 0)
+light_color = Color(0.928677, 0.916868, 0.904315, 1)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4cdxr")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Position:"

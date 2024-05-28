@@ -1,0 +1,12 @@
+{
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/godot-cpp/include/**",
+        "${workspaceFolder}/src"
+    ],
+    "C_Cpp.default.browse.path": [
+        "${workspaceFolder}/src",
+        "${workspaceFolder}/godot-cpp/include/**"
+    ],
+    "C_Cpp.loggingLevel": "Debug",
+    "cmake.configureOnOpen": false
+}

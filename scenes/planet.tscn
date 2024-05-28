@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://oghgltjrgh8p"]
+
+[ext_resource type="Script" path="res://src/util/planet.gd" id="1_lfoci"]
+[ext_resource type="Script" path="res://src/Generator.gd" id="2_qrr2e"]
+[ext_resource type="Script" path="res://src/WorldGenerator.gd" id="3_dwmds"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k0rov"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="TorusMesh" id="TorusMesh_gnn6g"]
+
+[sub_resource type="Gradient" id="Gradient_xy6jl"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.124825, 0.261333, 0.519596, 0.876498)
+colors = PackedColorArray(2.5028e-06, 0.475067, 0.610446, 1, 0.829325, 0.595575, 0.00993669, 1, 0.205843, 0.754469, 7.70092e-07, 1, 0.151829, 0.135316, 0.110198, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_m0qju"]
+noise_type = 2
+frequency = 1.0
+
+[node name="Planet" type="Node3D" node_paths=PackedStringArray("worldgen", "planet_mesh_group")]
+script = ExtResource("1_lfoci")
+material = SubResource("StandardMaterial3D_k0rov")
+worldgen = NodePath("WorldGenerator")
+planet_mesh_group = NodePath("MeshGroup")
+
+[node name="MeshGenerator" type="Node" parent="." node_paths=PackedStringArray("generator")]
+script = ExtResource("2_qrr2e")
+generator = NodePath("../WorldGenerator")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_gnn6g")
+
+[node name="WorldGenerator" type="Node" parent="."]
+script = ExtResource("3_dwmds")
+colors = SubResource("Gradient_xy6jl")
+noise = SubResource("FastNoiseLite_m0qju")
+size = 1.0
+
+[node name="MeshGroup" type="Node3D" parent="."]

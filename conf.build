@@ -1,0 +1,21 @@
+{
+	"disabled_build_options": {
+		"brotli": false,
+		"disable_2d_physics": true,
+		"disable_navigation": true,
+		"graphite": false,
+		"module_freetype_enabled": false,
+		"module_text_server_adv_enabled": false,
+		"opengl3": false,
+		"openxr": false
+	},
+	"disabled_classes": [
+		"AnimationMixer",
+		"CanvasItem",
+		"NavigationAgent2D",
+		"NavigationAgent3D",
+		"Resource",
+		"SkeletonIK3D"
+	],
+	"type": "build_profile"
+}
